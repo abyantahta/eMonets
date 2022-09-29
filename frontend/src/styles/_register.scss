@@ -92,6 +92,11 @@
                 color: white;
                 font-weight: 600;
                 font-size: 1.1rem;
+                cursor: pointer;
+            }
+            .forget{
+                color: $oren;
+                text-align: end;
             }
             h3{
                 font-family: 'Inter', sans-serif;

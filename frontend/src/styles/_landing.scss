@@ -7,6 +7,8 @@
     width: 100%;
     display: flex;
     padding: 0 5em;
+    position: fixed;
+    z-index: 99;
 
     .left{
         // background-color: red;
@@ -41,12 +43,15 @@
         }
     }
 }
-
+.Landing{
+    overflow-x: hidden;
+}
 .landingPage{
     width: 100%;
     height: 100vh;
     background: linear-gradient(to right,rgba(77,119,78),rgba(157,200,141,0.51));
     display: flex;
+    position: relative;
     // overflow: hidden;
 
     .leftSide{
@@ -93,10 +98,20 @@
     }
 
 }
-
+.landingPage::before{
+    content: '';
+    width: 110%;
+    height: 70px;
+    background-color: $oren;
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform:translateX(-50%) ;
+    border-radius: 50%;
+}
 .manfaat{
     width: 100%;
-    height: 80vh;
+    height: 90vh;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -104,7 +119,7 @@
     // justify-content: center;
     font-family: 'Inter', sans-serif;
     .heroText{
-        margin-top: 2em;
+        margin-top: 3.5em;
         color: $ijo;
         font-size: 2.5rem;
     }
@@ -141,4 +156,138 @@
         display: flex;
         justify-content: space-between;
     }
+}
+.layananKami{
+    background: linear-gradient(180deg, rgba(157, 200, 141, 0.911458) 0%, rgba(241, 178, 74, 0.63) 73.44%, rgba(241, 178, 74, 0) 100%);
+    width: 100%;
+    height: 1856px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .heroText{
+        color: white;
+        font-size: 2.5rem;
+        font-family: "inter",sans-serif;
+        text-align: center;
+        padding-top: 3em;
+        // margin-top: 3em;
+    }
+    .container{
+        margin-top: 7em;
+        width: 60%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 100px;
+        // background-color: red;
+
+        .card{
+            width: 90%;
+            // height: 200px;
+            // background-color: blue;
+            display: flex;
+            justify-content: space-between;
+            .img{
+                width: 25%;
+                // background-color: yellow;
+                img{
+                    width: 100%;
+                }
+            }
+            .content{
+                font-family: "inter",sans-serif;
+                width: 55%;
+                // background-color: aqua;
+                color: white;
+
+                h2{
+                    // text-decoration: underline;
+                    // padding-right: -10px;
+                    font-size: 1.8rem;
+                    padding-bottom: 6px;
+                    border-bottom: 4px solid white;
+                    display: inline;
+                }
+                h4{
+                    margin-top: 2em;
+                    font-size: 1.4em;
+                    font-weight: 500;
+                }
+
+            }
+        }
+        .cardRight{
+            flex-direction: row-reverse;
+        }
+
+    }
+}
+.tentangKami{
+    height: 500px;
+    padding: 0 10em;
+
+    h2{
+        color: $ijo;
+        font-family: 'inter', sans-serif;
+        font-size: 2em;
+    }
+    .container{
+        // background-color: red;
+        display: flex;
+        margin-top: 3em;
+        width: 100%;
+        align-items: flex-start;
+        // align-items: space-between;
+        justify-content: space-between;
+        .img{
+            width: 25%;
+            // background-color: blue;
+            img{
+                width: 100%;
+            }
+        }
+        .content{
+            width: 50%;
+            // background-color: yellow;
+            .logo{
+                width: 200px;
+                img{
+                    width: 100%;
+                }
+            }
+            h4{
+                color: $ijo;
+                font-family: 'inter',sans-serif;
+                font-size: 1.3rem;
+                font-weight: 300;
+                margin-top: 1em;
+                line-height: 40px;
+            }
+            .sosmed{
+                display: flex;
+                gap: 30px;
+                margin-top: 1em;
+                .icon{
+                    width: 35px;
+                    img{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.footer{
+    text-align: center;
+    font-family: 'inter',sans-serif;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+    background: linear-gradient(180deg, #F1B24A 0%, rgba(241, 178, 74, 0.755208) 99.99%, rgba(241, 178, 74, 0) 100%);
 }

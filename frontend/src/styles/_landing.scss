@@ -1,3 +1,144 @@
 // h1{
 //     background-color: red;
 // }
+.navbar{
+    background-color: $oren;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    padding: 0 5em;
+
+    .left{
+        // background-color: red;
+        width: 20%;
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+        img{
+            width: 130px;
+        }
+    }
+    .right{
+        width: 80%;
+        // background-color: blue;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding-right: 2em;
+
+        ul{
+            display: flex;
+            gap: 100px ;
+            // background-color: ;
+            li{
+                text-decoration: none;
+                list-style: none;
+                color: white;
+                font-family: "inter",sans-serif;
+                font-weight: 700;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.landingPage{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to right,rgba(77,119,78),rgba(157,200,141,0.51));
+    display: flex;
+    // overflow: hidden;
+
+    .leftSide{
+        width: 60%;
+        height: 100%;
+        // background-color: red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+        .container{
+            font-family: 'Inter', sans-serif;
+            .heroText{
+                font-size: 3.5rem;
+            }
+            .heroDescription{
+                margin-top: 1em;
+                font-size: 1.2rem;
+                font-weight: 300;
+            }
+            .button{
+                display: flex;
+                gap: 15px;
+                .btn{
+                    padding: 0.5em 2em;
+                    width: 150px;
+                    border-radius: 0.5em;
+                }
+                margin-top: 1.2em;
+            }
+        }
+    }
+    .landingHero{
+        width: 40%;
+        height: 100%;
+        // background-color: blue;
+        img{
+            position: relative;
+            top: 20%;
+            right: 90px;
+            width : 90%;
+        }
+    }
+
+}
+
+.manfaat{
+    width: 100%;
+    height: 80vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    font-family: 'Inter', sans-serif;
+    .heroText{
+        margin-top: 2em;
+        color: $ijo;
+        font-size: 2.5rem;
+    }
+    .cardContainer{
+        .card{
+            width: 230px;
+            height: 280px;
+            background-color: rgba(241,178,74,0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 20px;
+            padding: 0.5em 1.5em;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+            .img{
+                width: 60%;
+                img{
+                    width: 100%;
+                }
+            }
+            h2{
+                color: $ijo;
+                text-align: center;
+                font-weight: 300;
+                font-size: 1.3rem;
+                margin-top: 0.6em;
+            }
+        }
+        margin-top: 3em;
+        // background-color: blue;
+        width: 60%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

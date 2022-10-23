@@ -26,6 +26,7 @@
     }
     .right{
         width: 70%;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -106,10 +107,18 @@
                 margin-top: 20px;
 
                 span{
-                    a{
                         color:$oren;
-                    }
                 }
+            }
+        }
+        .backButton{
+            cursor: pointer;
+            position: absolute;
+            top: 1.7em;
+            left: 1.7em;
+            width: 50px;
+            img{
+                width: 100%;
             }
         }
             

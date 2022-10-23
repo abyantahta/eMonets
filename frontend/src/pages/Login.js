@@ -12,12 +12,14 @@ import {BsEyeSlash} from 'react-icons/bs'
 import {useState} from 'react'
 
 function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
     const [passwordType, setPasswordType] = useState("password");
-    const [passwordInput, setPasswordInput] = useState("");
-    const handlePasswordChange =(e)=>{
-        setPasswordInput(e.target.value);
-        console.log(e.target.value)
-    }
+    // const [passwordInput, setPasswordInput] = useState("");
+    // const handlePasswordChange =(e)=>{
+    //     setPasswordInput(e.target.value);
+    //     console.log(e.target.value)
+    // }
     const togglePassword =()=>{
       if(passwordType==="password")
       {
@@ -25,6 +27,10 @@ function Login() {
        return;
       }
       setPasswordType("password")
+    }
+    const handle = (e)=>{
+      e.preventDefault()
+      console.log(password)
     }
   return (
     <div className="form">
@@ -40,17 +46,17 @@ function Login() {
           <h1 className="formTitle">Login</h1>
             <div className="input">
               <i><VscMail/></i>
-              <input type="email" name='email' placeholder='email'/>
+              <input type="email" name='email' placeholder='email' required="" value={email} onChange={(e) => setEmail(e.target.value)}/>
             </div>
             <div className="input">
               <i><BsKey/></i>
-              <input type={passwordType} onChange={handlePasswordChange} name='password' placeholder='password' value={passwordInput}/>
+              <input type={passwordType} onChange={(e) => setPassword(e.target.value)} name='password' required="" placeholder='password' value={password}/>
               <div className="showPassword" onClick={togglePassword}>
                 {passwordType==="password"? <BsEye/> : <BsEyeSlash/> }
               </div>
             </div>
           <Link to='../forgotpassword'><h3 className='forget'>Forgot Password?</h3></Link>
-            <button type="submit">Login</button>
+            <button type="submit" onClick={handle}>Login</button>
           </form>
           <h3>Don't have an account? <Link to='../register'><span>Register</span></Link></h3>
         </div>

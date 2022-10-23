@@ -12,6 +12,7 @@ import {BsEyeSlash} from 'react-icons/bs'
 import {useState} from 'react'
 
 function ForgotPassword() {
+  const [email,setEmail]= useState("")
   return (
     <div className="form">
       <div className="left">
@@ -26,7 +27,7 @@ function ForgotPassword() {
           <h1 className="formTitle">Forgot Password?</h1>
             <div className="input">
               <i><VscMail/></i>
-              <input type="email" name='email' placeholder='email'/>
+              <input type="email" name='email' placeholder='email' required="" value={email} onChange={(e)=>setEmail(e.target.value)}/>
             </div>
             <button type="submit">Send Instruction</button>
           </form>

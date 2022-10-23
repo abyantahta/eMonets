@@ -12,8 +12,12 @@ import {BsEyeSlash} from 'react-icons/bs'
 import {useState} from 'react'
 
 function Register() {
-    const [passwordType, setPasswordType] = useState("password");
-    const [passwordInput, setPasswordInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+  const [username, setUsername] = useState("");
+
+  const [passwordType, setPasswordType] = useState("password");
     const handlePasswordChange =(e)=>{
         setPasswordInput(e.target.value);
         console.log(e.target.value)
@@ -28,7 +32,6 @@ function Register() {
     }
 
       const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-    const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
     const handleConfirmPasswordChange =(e)=>{
         setConfirmPasswordInput(e.target.value);
         console.log(e.target.value)
@@ -56,11 +59,11 @@ function Register() {
           <h1 className="formTitle">Register</h1>
             <div className="input">
               <i><BsPerson/></i>
-              <input type="text" name='username' placeholder='username'/>
+              <input type="text" name='username' placeholder='username' required="" value={username} onChange={(e)=>setUsername(e.target.value)}/>
             </div>
             <div className="input">
               <i><VscMail/></i>
-              <input type="email" name='email' placeholder='email'/>
+              <input type="email" name='email' placeholder='email' required="" value={email} onChange={(e)=>setEmail(e.target.value)}/>
             </div>
             <div className="input">
               <i><BsKey/></i>

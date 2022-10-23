@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import "../styles/style.scss"
 import landingHero from '../images/landingHero.png'
 import manfaat1 from '../images/manfaat1.png'
@@ -18,14 +19,14 @@ function Landing() {
   return ( 
     <div className="Landing">
     <Navbar />
-    <section className="landingPage">
+    <section id="landingPage">
       <div className="leftSide">
           <div className="container">
             <h2 className="heroText">Ayo Catat <br />Keuanganmu Sekarang</h2>
             <h4 className="heroDescription">Nikmati mudahnya kelola finansial hanya dengan e-monets</h4>
             <div className="button">
-              <button className="btn">Login</button>
-              <button className="btn">Register</button>
+              <Link to="/login"><button className="btn">Login</button></Link>
+              <Link to="/register"><button className="btn">Register</button></Link>
             </div>
           </div>
       </div>
@@ -34,7 +35,7 @@ function Landing() {
       </div>
     </section>
 
-    <section className="manfaat">
+    <section id="manfaat">
       <h1 className="heroText">Mengapa Pencatatan Keuangan itu Penting ?</h1>
       <div className="cardContainer">
         <div className="card">
@@ -58,7 +59,7 @@ function Landing() {
       </div>
     </section>
 
-    <section className="layananKami">
+    <section id="layananKami">
       <h1 className="heroText">Layanan Kami</h1>
       <div className="container">
         <div className="card">
@@ -109,7 +110,7 @@ function Landing() {
       </div>
     </section>
 
-    <section className="tentangKami">
+    <section id="tentangKami">
       <h2>Tentang Kami</h2>
       <div className="container">
         <div className="img">

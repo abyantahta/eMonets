@@ -26,7 +26,7 @@ function Catatanku() {
           <div className="headerLeft">
             <h2 className="catatanku">CatatanKu</h2>
             <div className="month">
-              <img src={leftArrow} alt="" />
+              <img src={leftArrow} a  lt="" />
               <h2>Januari</h2>
               <img src={rightArrow} alt="" />
             </div>

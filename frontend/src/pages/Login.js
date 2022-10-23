@@ -1,7 +1,9 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import "../styles/style.scss"
 import loginHero from '../images/loginHero.png'
 import logo from '../images/logo.png'
+import backButton from '../images/backButton.png'
 import {BsPerson} from 'react-icons/bs'
 import {VscMail} from 'react-icons/vsc'
 import {BsKey} from 'react-icons/bs'
@@ -24,22 +26,6 @@ function Login() {
       }
       setPasswordType("password")
     }
-
-      const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-    const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
-    const handleConfirmPasswordChange =(e)=>{
-        setConfirmPasswordInput(e.target.value);
-        console.log(e.target.value)
-    }
-    const toggleConfirmPassword =()=>{
-      if(confirmPasswordType==="password")
-      {
-       setConfirmPasswordType("text")
-       return;
-      }
-      setConfirmPasswordType("password")
-    }
-
   return (
     <div className="form">
       <div className="left">
@@ -63,11 +49,14 @@ function Login() {
                 {passwordType==="password"? <BsEye/> : <BsEyeSlash/> }
               </div>
             </div>
-          <h3 className='forget'>Forgot Password?</h3>
+          <Link to='../forgotpassword'><h3 className='forget'>Forgot Password?</h3></Link>
             <button type="submit">Login</button>
           </form>
-          <h3>Don't have an account? <span><a href="">Register</a></span></h3>
+          <h3>Don't have an account? <Link to='../register'><span>Register</span></Link></h3>
         </div>
+        <Link className="backButton" to="../">
+          <img src={backButton} alt="" />
+        </Link>
       </div>
     </div>
   )

@@ -1,7 +1,9 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import "../styles/style.scss"
 import registerHero from '../images/registerHero.png'
 import logo from '../images/logo.png'
+import backButton from '../images/backButton.png'
 import {BsPerson} from 'react-icons/bs'
 import {VscMail} from 'react-icons/vsc'
 import {BsKey} from 'react-icons/bs'
@@ -76,8 +78,11 @@ function Register() {
             </div>
             <button type="submit">Register</button>
           </form>
-          <h3>Already have an account? <span><a href="">Login</a></span></h3>
+          <h3>Already have an account? <Link to="../login"><span>Login</span></Link></h3>
         </div>
+        <Link className="backButton" to="../">
+          <img src={backButton} alt="" />
+        </Link>
       </div>
     </div>
   )

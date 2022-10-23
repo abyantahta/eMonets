@@ -9,11 +9,10 @@ function Navbar() {
         </div>
         <div className="right">
             <ul>
-                <li>Home</li>
-                <li>Manfaat</li>
-                <li>Fitur</li>
-                <li>Artikel</li>
-                <li>Tentang Kami</li>
+                <li><a href="#LandingPage">Home</a></li>
+                <li><a href="#manfaat">Manfaat</a></li>
+                <li><a href="#layananKami">Fitur</a></li>
+                <li><a href="#tentangKami">Tentang Kami</a></li>
             </ul>
         </div>
     </div>

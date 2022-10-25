@@ -1,5 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {gsap} from "gsap"
+import {useRef,useEffect} from 'react'
+import {useIntersection} from 'react-use'
 import "../styles/style.scss"
 import landingHero from '../images/landingHero.png'
 import manfaat1 from '../images/manfaat1.png'
@@ -16,6 +19,8 @@ import tentangKamiLogo from '../images/tentangKamiLogo.png'
 import Navbar from '../components/Navbar'
 import logo from '../images/logo.png'
 function Landing() {
+
+
   return ( 
     <div className="Landing">
     <Navbar />
@@ -35,7 +40,7 @@ function Landing() {
       </div>
     </section>
 
-    <section id="manfaat">
+    <section id="manfaat" >
       <h1 className="heroText">Mengapa Pencatatan Keuangan itu Penting ?</h1>
       <div className="cardContainer">
         <div className="card">

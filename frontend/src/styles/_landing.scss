@@ -16,6 +16,7 @@
     .leftSide{
         width: 60%;
         height: 100%;
+        animation: pop-slide-up 2s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
         // background-color: red;
         display: flex;
         align-items: center;
@@ -39,12 +40,19 @@
                     padding: 0.5em 2em;
                     width: 150px;
                     border-radius: 0.5em;
+                    transition: .2s linear;
+                    &:hover{
+                        background-color: #dda345;
+                        transition: .2s linear;
+                        border-radius: 0;
+                    }
                 }
                 margin-top: 1.2em;
             }
         }
     }
     .landingHero{
+        animation: pop-slide-up 2s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
         width: 40%;
         height: 100%;
         // background-color: blue;
@@ -78,12 +86,14 @@
     // justify-content: center;
     font-family: 'Inter', sans-serif;
     .heroText{
+            animation: pop-scale-up 0.5s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
         margin-top: 3.5em;
         color: $ijo;
         font-size: 2.5rem;
     }
     .cardContainer{
         .card{
+            opacity: 1;
             width: 230px;
             height: 280px;
             background-color: rgba(241,178,74,0.75);

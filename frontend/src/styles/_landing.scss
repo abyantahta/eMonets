@@ -86,14 +86,15 @@
     // justify-content: center;
     font-family: 'Inter', sans-serif;
     .heroText{
-            animation: pop-scale-up 0.5s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+        // animation: pop-scale-up 0.5s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
         margin-top: 3.5em;
         color: $ijo;
         font-size: 2.5rem;
+        opacity: 0;
     }
     .cardContainer{
         .card{
-            opacity: 1;
+            opacity: 0;
             width: 230px;
             height: 280px;
             background-color: rgba(241,178,74,0.75);
@@ -140,6 +141,7 @@
         font-family: "inter",sans-serif;
         text-align: center;
         padding-top: 3em;
+        opacity: 1;
         // margin-top: 3em;
     }
     .container{
@@ -153,6 +155,7 @@
         // background-color: red;
 
         .card{
+            opacity: 0;
             width: 90%;
             // height: 200px;
             // background-color: blue;
@@ -196,6 +199,7 @@
 #tentangKami{
     height: 500px;
     padding: 0 10em;
+    opacity: 0;
 
     h2{
         color: $ijo;
@@ -260,3 +264,6 @@
 
     background: linear-gradient(180deg, #F1B24A 0%, rgba(241, 178, 74, 0.755208) 99.99%, rgba(241, 178, 74, 0) 100%);
 }
+
+
+

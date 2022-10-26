@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {gsap} from "gsap"
-import {useRef,useEffect} from 'react'
+import {useRef,useEffect, useState} from 'react'
+import {useInView} from 'react-intersection-observer'
 import {useIntersection} from 'react-use'
 import "../styles/style.scss"
 import landingHero from '../images/landingHero.png'
@@ -19,8 +20,39 @@ import tentangKamiLogo from '../images/tentangKamiLogo.png'
 import Navbar from '../components/Navbar'
 import logo from '../images/logo.png'
 function Landing() {
-
-
+  
+  const {ref : myRef, inView : isVisible} = useInView()
+  const {ref : cardRef1, inView : cardIsVisible1} = useInView({
+    threshold : 0.2,
+  })
+  const {ref : cardRef2, inView : cardIsVisible2} = useInView({
+    threshold : 0.2,
+  })
+  const {ref : cardRef3, inView : cardIsVisible3} = useInView({
+    threshold : 0.2,
+  })
+  const {ref : layananKami, inView : layananIsVisible} = useInView({
+    threshold : 0.2,
+  })
+  const {ref : refLayanan1, inView : layanan1IsVisible} = useInView({
+    threshold : 0.4,
+  })
+  const {ref : refLayanan2, inView : layanan2IsVisible} = useInView({
+    threshold : 0.4,
+  })
+  const {ref : refLayanan3, inView : layanan3IsVisible} = useInView({
+    threshold : 0.4,
+  })
+  const {ref : refLayanan4, inView : layanan4IsVisible} = useInView({
+    threshold : 0.4,
+  })
+  const {ref : refLayanan5, inView : layanan5IsVisible} = useInView({
+    threshold : 0.4,
+  })
+  const {ref : aboutUs, inView : aboutUsIsVisible} = useInView({
+    threshold : 0.2,
+  })
+  
   return ( 
     <div className="Landing">
     <Navbar />
@@ -41,21 +73,21 @@ function Landing() {
     </section>
 
     <section id="manfaat" >
-      <h1 className="heroText">Mengapa Pencatatan Keuangan itu Penting ?</h1>
-      <div className="cardContainer">
-        <div className="card">
+      <h1 className={`${isVisible? `pop-slide-up` : ``} heroText `} ref={myRef}>Mengapa Pencatatan Keuangan itu Penting ?</h1>
+      <div className='cardContainer' >
+        <div className={`${cardIsVisible1? `cardAnimation-1` : ``} card `} ref={cardRef1}>
           <div className="img">
             <img src={manfaat1} alt="" />
           </div>
           <h2>Mempersiapkan masa depan</h2>
         </div>
-        <div className="card">
+        <div className={`${cardIsVisible2? `cardAnimation-2` : ``} card `} ref={cardRef2}>
           <div className="img">
             <img src={manfaat2} alt="" />
           </div>
           <h2>Keuangan terkelola dengan baik</h2>
         </div>
-        <div className="card">
+        <div className={`${cardIsVisible3? `cardAnimation-3` : ``} card `} ref={cardRef3}>
           <div className="img">
             <img src={manfaat3} alt="" />
           </div>
@@ -65,9 +97,9 @@ function Landing() {
     </section>
 
     <section id="layananKami">
-      <h1 className="heroText">Layanan Kami</h1>
+      <h1 className={`${layananIsVisible? `pop-slide-up` : ``} heroText `} ref={layananKami}>Layanan Kami</h1>
       <div className="container">
-        <div className="card">
+        <div className={`${layanan1IsVisible? `slideLeft` : ``} card `} ref={refLayanan1}>
           <div className="img">
             <img src={layanan1} alt="" />
           </div>
@@ -76,7 +108,7 @@ function Landing() {
             <h4 className="text">Catat pemasukan dan pengeluaranmu selama sebulan agar keuangan lebih teratur</h4>
           </div>
         </div>
-        <div className="card cardRight">
+        <div className={`${layanan2IsVisible? `slideRight` : ``} card cardRight`} ref={refLayanan2}>
           <div className="img">
             <img src={layanan2} alt="" />
           </div>
@@ -85,7 +117,7 @@ function Landing() {
             <h4 className="text">Unduh laporan mingguan, bulanan, dan tahunan dengan sekali klikteratur</h4>
           </div>
         </div>
-        <div className="card">
+        <div className={`${layanan3IsVisible? `slideLeft` : ``} card `} ref={refLayanan3}>
           <div className="img">
             <img src={layanan3} alt="" />
           </div>
@@ -94,7 +126,7 @@ function Landing() {
             <h4 className="text">Rencanakan pengeluaran yang akan datang dan tabung anggaran agar rencanamu menjadi nyata</h4>
           </div>
         </div>
-        <div className="card cardRight">
+        <div className={`${layanan4IsVisible? `slideRight` : ``} card cardRight`} ref={refLayanan4}>
           <div className="img">
             <img src={layanan4} alt="" />
           </div>
@@ -103,7 +135,7 @@ function Landing() {
             <h4 className="text">Baca tips-tips pengelolaan keuangan dari berbagai artikel menarik</h4>
           </div>
         </div>
-        <div className="card">
+        <div className={`${layanan5IsVisible? `slideLeft` : ``} card `} ref={refLayanan5}>
           <div className="img">
             <img src={layanan5} alt="" />
           </div>
@@ -115,7 +147,7 @@ function Landing() {
       </div>
     </section>
 
-    <section id="tentangKami">
+    <section id="tentangKami" className={`${aboutUsIsVisible? `pop-slide-up` : ``}`} ref={aboutUs}>
       <h2>Tentang Kami</h2>
       <div className="container">
         <div className="img">

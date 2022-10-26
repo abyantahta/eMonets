@@ -20,24 +20,55 @@ button{
     cursor: pointer;
 }
 
-@keyframes pop-slide-up {
-  0% {
+.pop-slide-up{
+  animation: slideUp 1s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+}
+.cardAnimation-1{
+  animation: slideUp 2s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+}
+.cardAnimation-2{
+  animation: slideUp 2s 0.2s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+}
+.cardAnimation-3{
+  animation: slideUp 2s 0.4s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+}
+.slideLeft{
+  animation:slideLeft 1s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+}
+.slideRight{
+  animation:slideRight 1s cubic-bezier(0, 0.67, 0.2, 1.05) forwards;
+}
+
+
+@keyframes slideLeft{
+  0%{
+    opacity: 0;
+    transform: translateX(-8rem);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideRight{
+  0%{
+    opacity: 0;
+    transform: translateX(8rem);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideUp{
+  0%{
     opacity: 0;
     transform: translateY(4rem);
   }
-  100% {
-    transform: translateY(0);
+  100%{
     opacity: 1;
+    transform: translateX(0);
   }
 }
-@keyframes pop-scale-up {
-  0% {
-    opacity: 0;
-    transform: scaleX(0);
-}
-100% {
-    transform: scaleX(1);
-    // transform: translateY(0);
-    opacity: 1;
-  }
-}
+
+

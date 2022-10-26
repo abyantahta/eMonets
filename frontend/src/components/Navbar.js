@@ -13,7 +13,7 @@ function Navbar() {
         <div className="right">
             <ul>
                 <li><a href="#LandingPage">Home</a></li>
-                <li><a href="#manfaat">Manfaat</a></li>
+                <li><a href="#manfaat">Manfaat</a></li> 
                 <li><a href="#layananKami">Fitur</a></li>
                 <li><a href="#tentangKami">Tentang Kami</a></li>
             </ul>

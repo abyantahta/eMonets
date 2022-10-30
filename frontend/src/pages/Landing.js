@@ -1,9 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {gsap} from "gsap"
-import {useRef,useEffect, useState} from 'react'
 import {useInView} from 'react-intersection-observer'
-import {useIntersection} from 'react-use'
 import "../styles/style.scss"
 import landingHero from '../images/landingHero.png'
 import manfaat1 from '../images/manfaat1.png'

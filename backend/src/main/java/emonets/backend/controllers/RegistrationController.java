@@ -28,6 +28,7 @@ import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import emonets.backend.dto.GantiPasswordData;
 import emonets.backend.dto.JsonWebToken;
 import emonets.backend.dto.RegisterData;
 import emonets.backend.dto.ResponseData;
@@ -90,19 +91,17 @@ public class RegistrationController {
                     .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .sign(algorithm);
                 
-                    // mengenkapsulasi token dalam class JsonWebtoken
-                    JsonWebToken token = new JsonWebToken();
-                    token.setAccess_token(access_token);
-                    token.setRefresh_token(refresh_token);
-
-                    // mengenkapsulasi response menggunakan ResponseData
-                    ResponseData<JsonWebToken> res = new ResponseData<>();
-                    res.setStatus(true);
-                    res.getMessages().add("refresh token berhasil");
-                    res.setPayload(token);
-
-                    response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
-                    new ObjectMapper().writeValue(response.getOutputStream(), res);
+                // mengenkapsulasi token dalam class JsonWebtoken
+                JsonWebToken token = new JsonWebToken();
+                token.setAccess_token(access_token);
+                token.setRefresh_token(refresh_token);
+                // mengenkapsulasi response menggunakan ResponseData
+                ResponseData<JsonWebToken> res = new ResponseData<>();
+                res.setStatus(true);
+                res.getMessages().add("refresh token berhasil");
+                res.setPayload(token);
+                response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), res);
                 
 
             } catch (Exception e) {
@@ -120,6 +119,33 @@ public class RegistrationController {
         else{
             throw new RuntimeException("Refresh token is missing");
         }
+    }
+
+    @PostMapping("/gantipassword")
+    public ResponseEntity<ResponseData<?>> gantiPassword(@Valid @RequestBody GantiPasswordData gantiPasswordData, Errors errors){
+        ResponseData<?> responseData = new ResponseData<>();
+
+        //cek error validasi
+        if(errors.hasErrors()){
+            //mendapatkan semua error
+            for (ObjectError error : errors.getAllErrors()) {
+                responseData.getMessages().add(error.getDefaultMessage());
+            }
+            //melengkapi responseData
+            responseData.setStatus(false);
+            responseData.setPayload(null);
+            //return
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
+        }
+        else{
+            responseData = registrationService.gantiPassword(gantiPasswordData);
+            return ResponseEntity.ok().body(responseData);
+        }
+    }
+
+    @GetMapping("/confirmgantipassword")
+    public void confirmGantiPassword(@RequestParam("token") String token){
+        
     }
 
     @GetMapping("/test")

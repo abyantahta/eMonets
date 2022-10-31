@@ -14,11 +14,9 @@ import emonets.backend.models.AppUser;
 import emonets.backend.models.AppUserRepo;
 import emonets.backend.models.ConfirmationToken;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 public class AppUserService implements UserDetailsService{
 
     private final AppUserRepo appUserRepo;
@@ -35,12 +33,10 @@ public class AppUserService implements UserDetailsService{
 
         //cek ada tidaknya user tersebut di database
         if(appUserRepo.findByEmail(user.getName()).isPresent()){
-            log.info("cek jalur user exist");
             registerTokenData.setToken(null);
             registerTokenData.setUserExist(true);
         }
         else{
-            log.info("cek jalur user not exist");
             //enkripsi password
             String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 
@@ -67,6 +63,36 @@ public class AppUserService implements UserDetailsService{
             registerTokenData.setUserExist(false);
             registerTokenData.setToken(token);
         }
+        return registerTokenData;
+    }
+
+    public RegisterTokenData gantiPassword(String email){
+        RegisterTokenData registerTokenData = new RegisterTokenData();
+
+        if(appUserRepo.findByEmail(email).isPresent()){
+            AppUser user = appUserRepo.findByEmail(email).get();
+            //membuat string random token
+            String token = UUID.randomUUID().toString();
+
+            //buat confirmation token
+            ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                user
+            );
+
+            //save confirmation token
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+            //set register token data
+            registerTokenData.setToken(token);
+            registerTokenData.setUserExist(true);
+        }
+        else{
+            registerTokenData.setToken(null);
+            registerTokenData.setUserExist(false);
+        }
+
         return registerTokenData;
     }
 

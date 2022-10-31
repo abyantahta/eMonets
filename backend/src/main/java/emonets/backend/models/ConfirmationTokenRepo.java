@@ -20,4 +20,9 @@ public interface ConfirmationTokenRepo extends JpaRepository<ConfirmationToken,L
             "WHERE t.token = ?1"
     )
     int updateConfirmedAt(String token, LocalDateTime confirmedAt);
+
+    @Query(
+        "SELECT t.appUser FROM ConfirmationToken t"
+    )
+    Optional<AppUser> findAppUserByToken(String token);
 }

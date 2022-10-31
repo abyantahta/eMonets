@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import emonets.backend.models.AppUser;
 import emonets.backend.models.ConfirmationToken;
 import emonets.backend.models.ConfirmationTokenRepo;
 import lombok.AllArgsConstructor;
@@ -26,5 +27,9 @@ public class ConfirmationTokenService {
 
     public int setConfirmedAt(String token){
         return confirmationTokenRepo.updateConfirmedAt(token, LocalDateTime.now());
+    }
+
+    public AppUser getAppUserByToken(String token){
+        return confirmationTokenRepo.findAppUserByToken(token).get();
     }
 }

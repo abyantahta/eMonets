@@ -1,5 +1,8 @@
 package emonets.backend.services;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -117,6 +120,44 @@ public class RegistrationService {
         
         //selesai
         return "terkonfirmasi, kembali ke halaman login!";
+    }
+
+    public ResponseData<String> confirmGantiPasswordToken(String token){
+        //mengambil token sekaligus cek keberadaan token
+        ConfirmationToken confirmationToken = confirmationTokenService
+        .getToken(token)
+        .orElseThrow(()-> new IllegalStateException("token tidak ditemukan"));
+
+        //cek sudah atau belum konfirmasi jika sudah maka throw ex, belum maka lanjut
+        if(confirmationToken.getConfirmedAt() != null){
+            throw new IllegalStateException("email sudah terkonfirmasi");
+        }
+        
+        //set token terkonfirmasi sampai ke database
+        confirmationTokenService.setConfirmedAt(token);
+
+        //dapatkan user dari token
+        AppUser user = confirmationTokenService.getAppUserByToken(token);
+
+        //buat token lagi
+        String tokenSend = UUID.randomUUID().toString();
+
+        //buat dan save confirmation token
+        ConfirmationToken confirmationTokenSend = new ConfirmationToken(
+            tokenSend,
+            LocalDateTime.now(),
+            user
+        );
+
+        //save confirmation token
+        confirmationTokenService.saveConfirmationToken(confirmationTokenSend);
+
+        ResponseData<String> responseData = new ResponseData<>();
+        responseData.setStatus(true);
+        responseData.setPayload(tokenSend);
+        responseData.getMessages().add("password dapat diubah");
+
+        return responseData;
     }
 
     private String buildEmail(String name, String link) {

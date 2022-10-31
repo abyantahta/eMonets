@@ -63,8 +63,8 @@ public class RegistrationService {
         return responseData;
     }
 
-    public ResponseData<?> gantiPassword(GantiPasswordData gantiPasswordData){
-        ResponseData<?> responseData = new ResponseData<>();
+    public ResponseData<String> gantiPassword(GantiPasswordData gantiPasswordData){
+        ResponseData<String> responseData = new ResponseData<>();
         //ambil Register Token Data
         RegisterTokenData registerTokenData = appUserService.gantiPassword(gantiPasswordData.getEmail());
 
@@ -85,7 +85,7 @@ public class RegistrationService {
             //lengkapi respon
             responseData.setStatus(true);
             responseData.getMessages().add("berhasil");
-            responseData.setPayload(null);
+            responseData.setPayload(token);
         }
         //if user not exist
         else{

@@ -241,21 +241,168 @@
 
 .popUpCatatanku{
     position: absolute;
-    background-color: rgba(0, 0, 255, 0.544);
+    // background-color: rgba(0, 0, 0, 0.445);    
+    background-color: #7676767c;
+    // filter: blur(10px);
     height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     .content{
-        width: 60%;
+        width: 55%;
         height:80vh;
         position: absolute;
+        font-family: "Inter", sans-serif;
         background-color: red;
         .header{
+            padding: 0 4em;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
             height: 15%;
             background-color:#F1B24A;
+            h3{
+                font-size: 2rem;
+                color: white;
+                text-shadow: 0 2px 5px rgba(0, 0, 0, 0.319);
+            }
+            .silang{
+                cursor: pointer;
+                width: 50px;
+                img{
+                    border-radius: 10%;
+                    width: 100%;
+                    transition: .2s ease;
+                    &:hover{
+                        // transform: scale(0.95);
+                        transition: .1s ease;
+                        background-color: rgb(246, 90, 90);
+                    }
+                }
+            }
+        }
+        .body{
+            padding: 0 4em;
+            padding-top: 2em;
+            width:100%;
+            height: 85%;
+            background-color: $ijo-muda;
+            .subTitle{
+                font-size: 1.5rem;
+                color: white;
+                text-shadow: 0 2px 3px rgba(0, 0, 0, 0.252);
+            }
+            .categoryWrapper{
+                margin-top: 15px;
+                display: flex;
+                // background-color: aqua;
+                // height: 35%;
+                justify-content: space-between;
+                .category{
+                    width: 90%;
+                    // background-color: red;
+                    overflow-x: scroll;
+                    display: flex;
+                    align-items: center;
+                    gap: 30px;
+                    // margin-top: 10px;
+                    // justify-content: center;
+                    .categoryItem{
+                        // margin-top: 20px;
+                        width: 100px;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                        .img{
+                            width: 100px;
+                            height: 100px;
+                            border-radius: 50%;
+                            background-color: #D9D9D9;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.337);
+                        }
+                        .imgTitle{
+                            font-size: 1rem;
+                            color: white;
+                            font-weight: 400;
+                            word-break: break-all;
+                        }
+                    }
+                }
+                .addCategory{
+                    width: 6%;
+                    // background-color: blue;
+                    img{
+                        margin-top: 25px;
+                        width: 100%;
+                        transition: .1s linear;
+                        &:hover{
+                            transform: scale(1.05);
+                            transition: .1s linear;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+            form{
+                display: flex;
+                flex-direction: column;
+                position: relative;
+            }
+            .formPemasukan{
+                margin-top: 20px;
+                width: 100%;
+                // background-color: blue;
+                display: flex;
+
+                input,textarea{
+                    font-family: "Inter",sans-serif;
+                    margin-top: 10px;
+                    font-size: 1rem;
+                    color: $ijo;
+                    padding: 0 20px;
+                }
+                textarea{
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    height: 200px;
+                    resize: none;
+
+                }
+                .leftSide{
+                    width: 50%;
+                    // gap: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    h4:nth-child(3){
+                        margin-top: 20px;
+                    }
+                }
+                .rightSide{
+                    width: 50%;
+                    // background-color: black;
+                    .descForm{
+                        width: 100%;
+                        height: 130px;
+                    }
+                }
+            }
+            .submit{
+                bottom: -50px;
+                right: 0;
+                position: absolute;
+                border-radius: 7px;
+                margin-top: 25px;
+                transition: .2s linear;
+                &:hover{
+                    border-radius: 0;
+                    transition: .2s linear;
+                    background-color: #dda345;
+
+                }
+            }
         }
     }
 

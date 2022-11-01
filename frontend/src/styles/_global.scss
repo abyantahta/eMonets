@@ -1,0 +1,19 @@
+.inputForm{
+outline: none;
+border: none;
+width: 250px;
+height: 40px;
+// padding-left: 10px;
+background-color: #D9D9D9;
+border-radius: 5px;
+    &::placeholder{
+        font-size: 1rem;
+        color: $ijo;
+        font-style: italic;
+        opacity: 0.8;
+        font-weight: 200;
+    }
+}
+.hidden{
+    display: none;
+}

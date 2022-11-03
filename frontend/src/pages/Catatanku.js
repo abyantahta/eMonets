@@ -290,7 +290,7 @@ function Catatanku() {
                 <div className="formPemasukan">
                   <div className="leftSide">
                     <h4 className="subTitle">Tanggal</h4>
-                    <input type="text" className="inputForm" placeholder="Masukkan tanggal" />
+                    <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
                     <h4 className="subTitle">Jumlah</h4>
                     <input type="text" className="inputForm" placeholder="Masukkan jumlah" />
 
@@ -370,7 +370,7 @@ function Catatanku() {
                 <div className="formPemasukan">
                   <div className="leftSide">
                     <h4 className="subTitle">Tanggal</h4>
-                    <input type="text" className="inputForm" placeholder="Masukkan tanggal" />
+                    <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
                     <h4 className="subTitle">Jumlah</h4>
                     <input type="text" className="inputForm" placeholder="Masukkan jumlah" />
 

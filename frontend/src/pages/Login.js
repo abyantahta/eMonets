@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/style.scss";
 import loginHero from "../images/loginHero.png";
 import logo from "../images/logo.png";
@@ -9,14 +9,18 @@ import { VscMail } from "react-icons/vsc";
 import { BsKey } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
+import useAuth from "../hooks/useAuth";
 
 const LOGIN_URL = "/api/login";
 
 function Login() {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   //ref
   const userRef = useRef();
@@ -55,7 +59,7 @@ function Login() {
       setAuth({ email, password, accessToken });
       setEmail("");
       setPassword("");
-      setSuccess(true);
+      navigate(from, { replace: true });
     } catch (error) {
       if (!error.response) {
         setErrMsg("server tidak merespon");

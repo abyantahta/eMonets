@@ -1,6 +1,7 @@
 package emonets.backend.controllers;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,7 @@ import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import emonets.backend.dto.GPActionData;
 import emonets.backend.dto.GantiPasswordData;
 import emonets.backend.dto.JsonWebToken;
 import emonets.backend.dto.RegisterData;
@@ -41,6 +44,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@CrossOrigin
 public class RegistrationController {
     
     private final RegistrationService registrationService;
@@ -65,13 +69,18 @@ public class RegistrationController {
         }
         else{
             responseData = registrationService.register(registerData);
-            return ResponseEntity.ok().body(responseData);
+            if(responseData.isStatus()){
+                return ResponseEntity.ok().body(responseData);
+            }else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
+            }
         }
     }
 
     @GetMapping("/confirm")
-    public String confirm(@RequestParam("token") String token){
-        return registrationService.confirmToken(token);
+    public ResponseEntity<Void> confirm(@RequestParam("token") String token){
+        String redirectUrl = registrationService.confirmToken(token);
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(redirectUrl)).build();
     }
 
     @GetMapping("/token/refresh")
@@ -151,6 +160,11 @@ public class RegistrationController {
 
         return ResponseEntity.ok().body(responseData);
     }
+
+    // @PostMapping("/gantipassword/action")
+    // public ResponseEntity<ResponseData<?>> gantiPasswordAction(@RequestBody GPActionData gpActionData){
+
+    // }
 
     @GetMapping("/test")
     public AppUser test(@RequestParam("token") String token){

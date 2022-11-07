@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import emonets.backend.dto.GPActionData;
 import emonets.backend.dto.GantiPasswordData;
 import emonets.backend.dto.RegisterData;
 import emonets.backend.dto.RegisterTokenData;
@@ -119,7 +120,7 @@ public class RegistrationService {
         );
         
         //selesai
-        return "terkonfirmasi, kembali ke halaman login!";
+        return "http://localhost:3000/login";
     }
 
     public ResponseData<String> confirmGantiPasswordToken(String token){
@@ -159,6 +160,21 @@ public class RegistrationService {
 
         return responseData;
     }
+
+    // public ResponseData<?> gantiPasswordAction(GPActionData gpActionData){
+    //     //mengambil token sekaligus cek keberadaan token
+    //     ConfirmationToken confirmationToken = confirmationTokenService
+    //     .getToken(gpActionData.getToken())
+    //     .orElseThrow(()-> new IllegalStateException("token tidak ditemukan"));
+
+    //     //cek sudah atau belum konfirmasi jika sudah maka throw ex, belum maka lanjut
+    //     if(confirmationToken.getConfirmedAt() == null){
+    //         throw new IllegalStateException("email belum dikonfirmasi");
+    //     }
+    //     else{
+
+    //     }
+    // }
 
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +

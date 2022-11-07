@@ -32,7 +32,8 @@ public class AppUserService implements UserDetailsService{
         RegisterTokenData registerTokenData = new RegisterTokenData();
 
         //cek ada tidaknya user tersebut di database
-        if(appUserRepo.findByEmail(user.getName()).isPresent()){
+
+        if(appUserRepo.findByEmail(user.getEmail()).isPresent()){
             registerTokenData.setToken(null);
             registerTokenData.setUserExist(true);
         }

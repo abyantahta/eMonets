@@ -66,7 +66,6 @@ function Register() {
         email: email,
         password: passwordInput,
       });
-      console.log(payload);
       const response = await axios.post(REGISTER_URL, payload, {
         headers: { "Content-Type": "application/json" },
         // withCredentials: true,
@@ -74,7 +73,7 @@ function Register() {
       setSuccess(true);
     } catch (error) {
       if (!error?.response) {
-        setErrMsg("No server response");
+        setErrMsg("server tidak merespon");
       } else {
         setErrMsg(error.response.data.messages);
       }

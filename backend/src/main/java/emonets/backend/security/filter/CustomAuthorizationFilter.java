@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import emonets.backend.dto.ResponseData;
 
+@CrossOrigin
 public class CustomAuthorizationFilter extends OncePerRequestFilter{
 
     @Override

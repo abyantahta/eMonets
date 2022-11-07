@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -24,8 +25,11 @@ import emonets.backend.dto.JsonWebToken;
 import emonets.backend.dto.ResponseData;
 import emonets.backend.models.AppUser;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
+@CrossOrigin
+@Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
     private final AuthenticationManager authenticationManager;
 
@@ -33,6 +37,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        log.info("test");
+        log.info(username);
+        log.info(password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -60,13 +67,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 1*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ 10*60*1000))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 2*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ 200*60*1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
@@ -82,6 +89,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         res.setPayload(token);
 
         response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(org.springframework.http.HttpStatus.OK.value());
         new ObjectMapper().writeValue(response.getOutputStream(), res);
     }
 }

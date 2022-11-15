@@ -15,19 +15,16 @@ function Catatanku() {
   const handlePemasukanPopUp = (e)=>{
     e.preventDefault()
     setPemasukanPopUp(true)
-    // setPopUp(!popUp)
   }
   const handlePengeluaranPopUp = (e)=>{
     e.preventDefault()
     setPengeluaranPopUp(true)
-    // setPopUp(!popUp)
   }
   const handleExit = (e)=>{
     e.preventDefault()
     setPengeluaranPopUp(false)
     setPemasukanPopUp(false)
   }
-  // const [popUp,setPopUp]
   return (
     <div className="catatanku">
       <div className="left">

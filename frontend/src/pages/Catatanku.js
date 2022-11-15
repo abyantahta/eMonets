@@ -124,102 +124,6 @@ function Catatanku() {
                   </div>
                 </td>
               </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -237,10 +141,10 @@ function Catatanku() {
             </div>
           </div>
           <div className="body">
-            <h3 className="subTitle">
+            {/* <h3 className="subTitle">
               Kategori
-            </h3>
-            <div className="categoryWrapper">
+            </h3> */}
+            {/* <div className="categoryWrapper">
               <div className="category">
                 <div className="categoryItem">
                   <div className="img">
@@ -282,14 +186,23 @@ function Catatanku() {
               <div className="addCategory">
                 <img src={addCategory} alt="" />
               </div>
-            </div>
+            </div> */}
               <form action="">
                 <div className="formPemasukan">
                   <div className="leftSide">
+                    <h4 className="subTitle">Kategori</h4>
+                    <select name="" id="" className='inputKategori'>
+                      <option value="makanan">Makanan dan Minuman</option>
+                      <option value="transportasi">Transportasi</option>
+                      <option value="kesehatan">Kesehatan</option>
+                      <option value="hobby">Hobby</option>
+                      <option value="sedekah">Sedekah</option>
+                      <option value="danlainlain">Dan lain-lain</option>
+                    </select>
                     <h4 className="subTitle">Tanggal</h4>
                     <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
                     <h4 className="subTitle">Jumlah</h4>
-                    <input type="text" className="inputForm" placeholder="Masukkan jumlah" />
+                    <input type="number" className="inputForm" placeholder="Masukkan jumlah" />
 
                   </div>
                   <div className="rightSide">
@@ -309,6 +222,47 @@ function Catatanku() {
         </div>
       </div>
       <div className={ pengeluaranPopUp ? "popUpCatatanku ":"popUpCatatanku hidden"}>
+        <div className="content">
+          <div className="header">
+            <h3>Pengeluaran</h3>
+            <div className="silang" onClick={handleExit}>
+              <img src={silang} alt="" />
+            </div>
+          </div>
+          <div className="body">
+              <form action="">
+                <div className="formPemasukan">
+                  <div className="leftSide">
+                    <h4 className="subTitle">Kategori</h4>
+                    <select name="" id="" className='inputKategori'>
+                      <option value="gaji">Gaji</option>
+                      <option value="bonus">Bonus</option>
+                      <option value="hasilpenjualan">Hasil Penjualan</option>
+                      <option value="danlainlain">Dan lain-lain</option>
+                    </select>
+                    <h4 className="subTitle">Tanggal</h4>
+                    <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
+                    <h4 className="subTitle">Jumlah</h4>
+                    <input type="number" className="inputForm" placeholder="Masukkan jumlah" />
+
+                  </div>
+                  <div className="rightSide">
+                    <h4 className="subTitle">Deskripsi</h4>
+                    <textarea type="text" className="inputForm descForm" placeholder="Masukkan deskripsi" />
+
+                  </div>
+                </div >
+
+                <button class="submit"> Simpan </button>
+              </form>
+          </div>
+        </div>
+
+        <div className="popUpCategory">
+          
+        </div>
+      </div>
+      {/* <div className={ pengeluaranPopUp ? "popUpCatatanku ":"popUpCatatanku hidden"}>
         <div className="content">
           <div className="header">
             <h3>Pengeluaran</h3>
@@ -387,7 +341,7 @@ function Catatanku() {
         <div className="popUpCategory">
 
         </div>
-      </div>
+      </div> */}
 
 
 

@@ -251,7 +251,7 @@
     justify-content: center;
     .content{
         width: 55%;
-        height:80vh;
+        height:68vh;
         position: absolute;
         font-family: "Inter", sans-serif;
         background-color: red;
@@ -373,11 +373,17 @@
                 }
                 .leftSide{
                     width: 50%;
-                    // gap: 8px;
+                    // gap: 10px;
                     display: flex;
                     flex-direction: column;
-                    h4:nth-child(3){
-                        margin-top: 20px;
+                    // h4:nth-child(3){
+                    //     margin-top: 20px;
+                    // }
+                    input,select{
+                        margin-bottom: 20px;
+                    }
+                    select{
+                        margin-top: 10px;
                     }
                 }
                 .rightSide{

@@ -11,6 +11,38 @@ import {useState} from 'react'
 function Catatanku() {
   const [pengeluaranPopUp, setPengeluaranPopUp] = useState(false);
   const [pemasukanPopUp, setPemasukanPopUp] = useState(false);
+  const [month,setMonth] = useState(1);
+  const [currentMonths,setCurrentMonths] = useState('Januari')
+  const months = {
+    "01" : 'Januari',
+    "02" : 'Februari',
+    "03" : "Maret",
+    "04" : "April",
+    "05" : "Mei",
+    "06" : "Juni",
+    "07" : "Juli",
+    "08" : "Agustus",
+    "09" : "September",
+    "10" : "Oktober",
+    "11" : "November",
+    "12" : "Desember",
+    "key" : function (n){
+      return this[Object.keys(this)[(n+14)%12]]
+    }
+  }
+  
+  const handleNextMonth = (e)=>{
+    e.preventDefault()
+    let current = month + 1
+    setMonth(current)
+    setCurrentMonths(months.key(current))
+  }
+  const handlePrevMonth = (e)=>{
+    e.preventDefault()
+    let current = month - 1
+    setMonth(current)
+    setCurrentMonths(months.key(current))
+  }
 
   const handlePemasukanPopUp = (e)=>{
     e.preventDefault()
@@ -50,9 +82,9 @@ function Catatanku() {
           <div className="headerLeft">
             <h2 className="h2catatanku">CatatanKu</h2>
             <div className="month">
-              <img src={leftArrow} a  lt="" />
-              <h2>Januari</h2>
-              <img src={rightArrow} alt="" />
+              <img src={leftArrow} alt="" onClick={handlePrevMonth} />
+              <h2>{currentMonths}</h2>
+              <img src={rightArrow} alt="" onClick={handleNextMonth} />
             </div>
           </div>
           <div className="headerRight">
@@ -141,52 +173,6 @@ function Catatanku() {
             </div>
           </div>
           <div className="body">
-            {/* <h3 className="subTitle">
-              Kategori
-            </h3> */}
-            {/* <div className="categoryWrapper">
-              <div className="category">
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-              </div>
-              <div className="addCategory">
-                <img src={addCategory} alt="" />
-              </div>
-            </div> */}
               <form action="">
                 <div className="formPemasukan">
                   <div className="leftSide">
@@ -203,7 +189,6 @@ function Catatanku() {
                     <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
                     <h4 className="subTitle">Jumlah</h4>
                     <input type="number" className="inputForm" placeholder="Masukkan jumlah" />
-
                   </div>
                   <div className="rightSide">
                     <h4 className="subTitle">Deskripsi</h4>
@@ -262,86 +247,6 @@ function Catatanku() {
           
         </div>
       </div>
-      {/* <div className={ pengeluaranPopUp ? "popUpCatatanku ":"popUpCatatanku hidden"}>
-        <div className="content">
-          <div className="header">
-            <h3>Pengeluaran</h3>
-            <div className="silang" onClick={handleExit}>
-              <img src={silang} alt="" />
-            </div>
-          </div>
-          <div className="body">
-            <h3 className="subTitle">
-              Kategori
-            </h3>
-            <div className="categoryWrapper">
-              <div className="category">
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-                <div className="categoryItem">
-                  <div className="img">
-                    <img src="" alt="" />
-                  </div>
-                  <h4 className="imgTitle">Kategori 1</h4>
-                </div>
-              </div>
-              <div className="addCategory">
-                <img src={addCategory} alt="" />
-              </div>
-            </div>
-              <form action="">
-                <div className="formPemasukan">
-                  <div className="leftSide">
-                    <h4 className="subTitle">Tanggal</h4>
-                    <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
-                    <h4 className="subTitle">Jumlah</h4>
-                    <input type="text" className="inputForm" placeholder="Masukkan jumlah" />
-
-                  </div>
-                  <div className="rightSide">
-                    <h4 className="subTitle">Deskripsi</h4>
-                    <textarea type="text" className="inputForm descForm" placeholder="Masukkan deskripsi" />
-
-                  </div>
-                </div >
-
-                <button class="submit"> Simpan </button>
-              </form>
-          </div>
-        </div>
-
-        <div className="popUpCategory">
-
-        </div>
-      </div> */}
 
 
 

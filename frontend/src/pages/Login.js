@@ -56,7 +56,8 @@ function Login() {
       });
       console.log(JSON.stringify(response.data));
       const accessToken = response.data.payload.access_token;
-      setAuth({ email, password, accessToken });
+      const refreshToken = response.data.payload.refresh_token;
+      setAuth({ email, password, accessToken, refreshToken });
       setEmail("");
       setPassword("");
       navigate(from, { replace: true });

@@ -40,11 +40,13 @@ import emonets.backend.services.AppUserService;
 import emonets.backend.services.ConfirmationTokenService;
 import emonets.backend.services.RegistrationService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
 @CrossOrigin
+@Slf4j
 public class RegistrationController {
     
     private final RegistrationService registrationService;
@@ -97,7 +99,7 @@ public class RegistrationController {
 
                 String access_token = JWT.create()
                     .withSubject(user.getUsername())
-                    .withExpiresAt(new Date(System.currentTimeMillis()+ 1*60*1000))
+                    .withExpiresAt(new Date(System.currentTimeMillis()+ 10*1000))
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .sign(algorithm);
@@ -111,14 +113,13 @@ public class RegistrationController {
                 res.setStatus(true);
                 res.getMessages().add("refresh token berhasil");
                 res.setPayload(token);
+                log.info("token "+res.getPayload().getAccess_token());
                 response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), res);
-                
 
             } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(org.springframework.http.HttpStatus.FORBIDDEN.value());
-                // response.sendError(org.springframework.http.HttpStatus.FORBIDDEN.value());
                 // mengenkapsulasi response menggunakan ResponseData
                 ResponseData<?> res = new ResponseData<>();
                 res.setStatus(false);
@@ -128,6 +129,7 @@ public class RegistrationController {
             }
         }
         else{
+            //nantinya harus dihandle menggunakan ResponseData
             throw new RuntimeException("Refresh token is missing");
         }
     }

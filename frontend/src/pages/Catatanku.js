@@ -1,62 +1,106 @@
-import React from 'react'
-import logo from '../images/logo.png'
-import leftArrow from '../images/leftArrow.png'
-import editIcon from '../images/editIcon.png'
-import silang from '../images/silang.png'
-import addCategory from '../images/addCategory.png'
-import deleteIcon from '../images/deleteIcon.png'
-import rightArrow from '../images/rightArrow.png'
-import {useState} from 'react'
+import React from "react";
+import logo from "../images/logo.png";
+import leftArrow from "../images/leftArrow.png";
+import editIcon from "../images/editIcon.png";
+import silang from "../images/silang.png";
+import addCategory from "../images/addCategory.png";
+import deleteIcon from "../images/deleteIcon.png";
+import rightArrow from "../images/rightArrow.png";
+import { useState, useEffect } from "react";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 function Catatanku() {
+  // integrasi
+
+  const [user, setUser] = useState();
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { setAuth } = useAuth();
+
+  const logout = async () => {
+    setAuth({});
+    navigate("/");
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getUser = async () => {
+      try {
+        const response = await axiosPrivate.get("/api/user", {
+          signal: controller.signal,
+        });
+        console.log(response.data);
+        isMounted && setUser(response.data.payload);
+      } catch (error) {
+        console.log(error.response);
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
+
+    getUser();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, []);
+
+  // integrasi
+
   const [pengeluaranPopUp, setPengeluaranPopUp] = useState(false);
   const [pemasukanPopUp, setPemasukanPopUp] = useState(false);
-  const [month,setMonth] = useState(1);
-  const [currentMonths,setCurrentMonths] = useState('Januari')
+  const [month, setMonth] = useState(1);
+  const [currentMonths, setCurrentMonths] = useState("Januari");
   const months = {
-    "01" : 'Januari',
-    "02" : 'Februari',
-    "03" : "Maret",
-    "04" : "April",
-    "05" : "Mei",
-    "06" : "Juni",
-    "07" : "Juli",
-    "08" : "Agustus",
-    "09" : "September",
-    "10" : "Oktober",
-    "11" : "November",
-    "12" : "Desember",
-    "key" : function (n){
-      return this[Object.keys(this)[(n+14)%12]]
-    }
-  }
-  
-  const handleNextMonth = (e)=>{
-    e.preventDefault()
-    let current = month + 1
-    setMonth(current)
-    setCurrentMonths(months.key(current))
-  }
-  const handlePrevMonth = (e)=>{
-    e.preventDefault()
-    let current = month - 1
-    setMonth(current)
-    setCurrentMonths(months.key(current))
-  }
+    "01": "Januari",
+    "02": "Februari",
+    "03": "Maret",
+    "04": "April",
+    "05": "Mei",
+    "06": "Juni",
+    "07": "Juli",
+    "08": "Agustus",
+    "09": "September",
+    10: "Oktober",
+    11: "November",
+    12: "Desember",
+    key: function (n) {
+      return this[Object.keys(this)[(n + 14) % 12]];
+    },
+  };
 
-  const handlePemasukanPopUp = (e)=>{
-    e.preventDefault()
-    setPemasukanPopUp(true)
-  }
-  const handlePengeluaranPopUp = (e)=>{
-    e.preventDefault()
-    setPengeluaranPopUp(true)
-  }
-  const handleExit = (e)=>{
-    e.preventDefault()
-    setPengeluaranPopUp(false)
-    setPemasukanPopUp(false)
-  }
+  const handleNextMonth = (e) => {
+    e.preventDefault();
+    let current = month + 1;
+    setMonth(current);
+    setCurrentMonths(months.key(current));
+  };
+  const handlePrevMonth = (e) => {
+    e.preventDefault();
+    let current = month - 1;
+    setMonth(current);
+    setCurrentMonths(months.key(current));
+  };
+
+  const handlePemasukanPopUp = (e) => {
+    e.preventDefault();
+    setPemasukanPopUp(true);
+  };
+  const handlePengeluaranPopUp = (e) => {
+    e.preventDefault();
+    setPengeluaranPopUp(true);
+  };
+  const handleExit = (e) => {
+    e.preventDefault();
+    setPengeluaranPopUp(false);
+    setPemasukanPopUp(false);
+  };
   return (
     <div className="catatanku">
       <div className="left">
@@ -64,8 +108,8 @@ function Catatanku() {
           <img src="" alt="" />
         </div>
 
-        <h1>Syarif Izza</h1>
-        <h2>Lorem ipsum dolor Lorem</h2>
+        <h1>{user ? user.username : "Username not found"}</h1>
+        <h2>{user ? user.email : "Email not found"}</h2>
         <div className="logout">
           <h3>Logout</h3>
         </div>
@@ -164,7 +208,9 @@ function Catatanku() {
         <img src={logo} alt="" />
       </div>
 
-      <div className={ pemasukanPopUp ? "popUpCatatanku ":"popUpCatatanku hidden"}>
+      <div
+        className={pemasukanPopUp ? "popUpCatatanku " : "popUpCatatanku hidden"}
+      >
         <div className="content">
           <div className="header">
             <h3>Pemasukan</h3>
@@ -173,40 +219,53 @@ function Catatanku() {
             </div>
           </div>
           <div className="body">
-              <form action="">
-                <div className="formPemasukan">
-                  <div className="leftSide">
-                    <h4 className="subTitle">Kategori</h4>
-                    <select name="" id="" className='inputKategori'>
-                      <option value="makanan">Makanan dan Minuman</option>
-                      <option value="transportasi">Transportasi</option>
-                      <option value="kesehatan">Kesehatan</option>
-                      <option value="hobby">Hobby</option>
-                      <option value="sedekah">Sedekah</option>
-                      <option value="danlainlain">Dan lain-lain</option>
-                    </select>
-                    <h4 className="subTitle">Tanggal</h4>
-                    <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
-                    <h4 className="subTitle">Jumlah</h4>
-                    <input type="number" className="inputForm" placeholder="Masukkan jumlah" />
-                  </div>
-                  <div className="rightSide">
-                    <h4 className="subTitle">Deskripsi</h4>
-                    <textarea type="text" className="inputForm descForm" placeholder="Masukkan deskripsi" />
+            <form action="">
+              <div className="formPemasukan">
+                <div className="leftSide">
+                  <h4 className="subTitle">Kategori</h4>
+                  <select name="" id="" className="inputKategori">
+                    <option value="makanan">Makanan dan Minuman</option>
+                    <option value="transportasi">Transportasi</option>
+                    <option value="kesehatan">Kesehatan</option>
+                    <option value="hobby">Hobby</option>
+                    <option value="sedekah">Sedekah</option>
+                    <option value="danlainlain">Dan lain-lain</option>
+                  </select>
+                  <h4 className="subTitle">Tanggal</h4>
+                  <input
+                    type="date"
+                    className="inputForm"
+                    placeholder="Masukkan tanggal"
+                  />
+                  <h4 className="subTitle">Jumlah</h4>
+                  <input
+                    type="number"
+                    className="inputForm"
+                    placeholder="Masukkan jumlah"
+                  />
+                </div>
+                <div className="rightSide">
+                  <h4 className="subTitle">Deskripsi</h4>
+                  <textarea
+                    type="text"
+                    className="inputForm descForm"
+                    placeholder="Masukkan deskripsi"
+                  />
+                </div>
+              </div>
 
-                  </div>
-                </div >
-
-                <button class="submit"> Simpan </button>
-              </form>
+              <button class="submit"> Simpan </button>
+            </form>
           </div>
         </div>
 
-        <div className="popUpCategory">
-          
-        </div>
+        <div className="popUpCategory"></div>
       </div>
-      <div className={ pengeluaranPopUp ? "popUpCatatanku ":"popUpCatatanku hidden"}>
+      <div
+        className={
+          pengeluaranPopUp ? "popUpCatatanku " : "popUpCatatanku hidden"
+        }
+      >
         <div className="content">
           <div className="header">
             <h3>Pengeluaran</h3>
@@ -215,43 +274,48 @@ function Catatanku() {
             </div>
           </div>
           <div className="body">
-              <form action="">
-                <div className="formPemasukan">
-                  <div className="leftSide">
-                    <h4 className="subTitle">Kategori</h4>
-                    <select name="" id="" className='inputKategori'>
-                      <option value="gaji">Gaji</option>
-                      <option value="bonus">Bonus</option>
-                      <option value="hasilpenjualan">Hasil Penjualan</option>
-                      <option value="danlainlain">Dan lain-lain</option>
-                    </select>
-                    <h4 className="subTitle">Tanggal</h4>
-                    <input type="date" className="inputForm" placeholder="Masukkan tanggal" />
-                    <h4 className="subTitle">Jumlah</h4>
-                    <input type="number" className="inputForm" placeholder="Masukkan jumlah" />
+            <form action="">
+              <div className="formPemasukan">
+                <div className="leftSide">
+                  <h4 className="subTitle">Kategori</h4>
+                  <select name="" id="" className="inputKategori">
+                    <option value="gaji">Gaji</option>
+                    <option value="bonus">Bonus</option>
+                    <option value="hasilpenjualan">Hasil Penjualan</option>
+                    <option value="danlainlain">Dan lain-lain</option>
+                  </select>
+                  <h4 className="subTitle">Tanggal</h4>
+                  <input
+                    type="date"
+                    className="inputForm"
+                    placeholder="Masukkan tanggal"
+                  />
+                  <h4 className="subTitle">Jumlah</h4>
+                  <input
+                    type="number"
+                    className="inputForm"
+                    placeholder="Masukkan jumlah"
+                  />
+                </div>
+                <div className="rightSide">
+                  <h4 className="subTitle">Deskripsi</h4>
+                  <textarea
+                    type="text"
+                    className="inputForm descForm"
+                    placeholder="Masukkan deskripsi"
+                  />
+                </div>
+              </div>
 
-                  </div>
-                  <div className="rightSide">
-                    <h4 className="subTitle">Deskripsi</h4>
-                    <textarea type="text" className="inputForm descForm" placeholder="Masukkan deskripsi" />
-
-                  </div>
-                </div >
-
-                <button class="submit"> Simpan </button>
-              </form>
+              <button class="submit"> Simpan </button>
+            </form>
           </div>
         </div>
 
-        <div className="popUpCategory">
-          
-        </div>
+        <div className="popUpCategory"></div>
       </div>
-
-
-
     </div>
-  )
+  );
 }
 
-export default Catatanku
+export default Catatanku;

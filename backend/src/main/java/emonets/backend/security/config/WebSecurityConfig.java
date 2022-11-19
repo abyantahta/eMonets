@@ -46,16 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers(   
-                                            "/api/login/**",
-                                            "/api/token/refresh/**",
-                                            "/api/register/**",
-                                            "/api/confirm/**",
-                                            "/api/test/**",
-                                            "/api/gantipassword/**",
-                                            "/api/confirmgantipassword/**"
+                                            "/api/**"
                                             )
                                 .permitAll();
-        http.authorizeRequests().anyRequest().hasAnyAuthority("USER");
+        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

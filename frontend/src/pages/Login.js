@@ -11,16 +11,17 @@ import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
 import { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
-import useAuth from "../hooks/useAuth";
+import { useCookies } from "react-cookie";
 
 const LOGIN_URL = "/api/login";
 
 function Login() {
-  const { setAuth } = useAuth();
+  //ini
+  const [cookies, setCookie] = useCookies(["auth"]);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/catatanku";
 
   //ref
   const userRef = useRef();
@@ -32,7 +33,6 @@ function Login() {
 
   //succes & error
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(true);
 
   //useEffect
   useEffect(() => {
@@ -56,8 +56,7 @@ function Login() {
       });
       console.log(JSON.stringify(response.data));
       const accessToken = response.data.payload.access_token;
-      const refreshToken = response.data.payload.refresh_token;
-      setAuth({ email, password, accessToken, refreshToken });
+      setCookie("auth", { accessToken });
       setEmail("");
       setPassword("");
       navigate(from, { replace: true });

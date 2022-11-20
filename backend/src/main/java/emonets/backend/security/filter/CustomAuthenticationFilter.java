@@ -28,8 +28,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
-@CrossOrigin
 @Slf4j
+@CrossOrigin
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
     private final AuthenticationManager authenticationManager;
 
@@ -67,13 +67,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 10*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ 2*60*60*1000))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 10*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ 120*60*60*1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 

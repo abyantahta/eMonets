@@ -10,19 +10,22 @@ import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import axios from "../api/axios";
+import { useCookies } from "react-cookie";
 
 function Catatanku() {
-  // integrasi
+  // integrasi start
 
   const [user, setUser] = useState();
-  const axiosPrivate = useAxiosPrivate();
+  // const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { setAuth } = useAuth();
+  // const { auth, setAuth } = useAuth();
+  const [cookies, setCookies] = useCookies(["auth"]);
 
   const logout = async () => {
-    setAuth({});
+    setCookies("auth", {});
     navigate("/");
   };
 
@@ -32,10 +35,10 @@ function Catatanku() {
 
     const getUser = async () => {
       try {
-        const response = await axiosPrivate.get("/api/user", {
+        const response = await axios.get("/api/user", {
+          headers: { authorization: `Bearer ${cookies.auth.accessToken}` },
           signal: controller.signal,
         });
-        console.log(response.data);
         isMounted && setUser(response.data.payload);
       } catch (error) {
         console.log(error.response);
@@ -51,7 +54,7 @@ function Catatanku() {
     };
   }, []);
 
-  // integrasi
+  // integrasi end
 
   const [pengeluaranPopUp, setPengeluaranPopUp] = useState(false);
   const [pemasukanPopUp, setPemasukanPopUp] = useState(false);
@@ -111,7 +114,9 @@ function Catatanku() {
         <h1>{user ? user.username : "Username not found"}</h1>
         <h2>{user ? user.email : "Email not found"}</h2>
         <div className="logout">
-          <h3>Logout</h3>
+          <button onClick={logout}>
+            <h3>Logout</h3>
+          </button>
         </div>
         <div className="nav">
           <div className="list">Catatanku</div>

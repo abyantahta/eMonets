@@ -20,7 +20,6 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
-        <Route path="/catatanku" element={<Catatanku />}></Route>
         <Route
           path="/createnewpassword"
           element={<CreateNewPassword />}
@@ -28,6 +27,7 @@ function App() {
 
         {/* protected */}
         <Route element={<RequiredAuth />}>
+          <Route path="/catatanku" element={<Catatanku />}></Route>
         </Route>
       </Route>
     </Routes>

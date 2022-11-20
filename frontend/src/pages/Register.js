@@ -113,6 +113,10 @@ function Register() {
         <section>
           <h1>Success!</h1>
           <p>silahkan cek email anda</p>
+          <br />
+          <Link to="../login">
+            <span>Kembali ke Login</span>
+          </Link>
         </section>
       ) : (
         <div className="form">

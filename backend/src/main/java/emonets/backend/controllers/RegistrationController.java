@@ -55,6 +55,7 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseData<?>> register(@Valid @RequestBody RegisterData registerData, Errors errors){
+        log.info("debug register: lajur 1");
         ResponseData<?> responseData = new ResponseData<>();
 
         //cek error validasi
@@ -88,6 +89,7 @@ public class RegistrationController {
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws StreamWriteException, DatabindException, IOException{
         String authorizationHeader = request.getHeader(org.springframework.http.HttpHeaders.AUTHORIZATION);
+        log.info("refresh token path: "+authorizationHeader);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
@@ -99,7 +101,7 @@ public class RegistrationController {
 
                 String access_token = JWT.create()
                     .withSubject(user.getUsername())
-                    .withExpiresAt(new Date(System.currentTimeMillis()+ 10*1000))
+                    .withExpiresAt(new Date(System.currentTimeMillis()+ 2*60*60*1000))
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .sign(algorithm);

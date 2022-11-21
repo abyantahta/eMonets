@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import emonets.backend.dto.CobaDateData;
+import emonets.backend.dto.TransaksiData;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -19,10 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 public class TestDateController {
     
     @PostMapping
-    public void nyobaDate(@RequestBody CobaDateData date){
-        log.info(date.getDate());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateTime = LocalDate.parse(date.getDate(), formatter);
-        log.info(dateTime.toString());
+    public void nyobaDate(@RequestBody TransaksiData data){
+        log.info("nominal: "+data.getNominal().toString());
+        log.info("kategori: "+data.getKategori());
+        log.info("deskripsi: "+data.getDeskripsi());
+        log.info("tanggal: "+data.getTanggal());
+        log.info("tipe: "+Integer.toString(data.getTipe()));
     }
 }

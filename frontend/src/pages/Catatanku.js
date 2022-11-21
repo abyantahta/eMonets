@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import { useCookies } from "react-cookie";
+import Feed from "../components/Feed";
 
 function Catatanku() {
   // integrasi start
@@ -46,7 +47,21 @@ function Catatanku() {
       }
     };
 
+    const getTransaksi = async () => {
+      try {
+        const response = await axios.get("/api/transaksi", {
+          headers: { authorization: `Bearer ${cookies.auth.accessToken}` },
+          signal: controller.signal,
+        });
+        isMounted && setList_transaksi(response.data.payload);
+      } catch (error) {
+        console.log(error.response);
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
+
     getUser();
+    getTransaksi();
 
     return () => {
       isMounted = false;
@@ -58,23 +73,63 @@ function Catatanku() {
 
   // nyoba dulu start
 
+  const [nominal, setNominal] = useState(0);
+  const [kategori, setKategori] = useState("makanan");
+  const [deskripsi, setDeskripsi] = useState("");
   const [date, setDate] = useState();
+  const [list_transaksi, setList_transaksi] = useState([]);
 
   const handleSubmitPemasukan = (e) => {
     e.preventDefault();
-    const getUser = async () => {
+    const postUser = async () => {
       try {
         const payload = JSON.stringify({
-          date: date,
+          nominal: nominal,
+          kategori: kategori,
+          deskripsi: deskripsi,
+          tanggal: date,
+          tipe: 0,
         });
-        const response = await axios.post("/api/cobadate", payload, {
-          headers: { "Content-Type": "application/json" },
+        const response = await axios.post("/api/transaksi", payload, {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${cookies.auth.accessToken}`,
+          },
         });
       } catch (error) {
         console.log(error.response);
       }
     };
-    getUser();
+    const getTransaksi = async () => {
+      try {
+        const response = await axios.get("/api/transaksi", {
+          headers: { authorization: `Bearer ${cookies.auth.accessToken}` },
+          signal: controller.signal,
+        });
+        isMounted && setList_transaksi(response.data.payload);
+      } catch (error) {
+        console.log(error.response);
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
+    postUser();
+    getTransaksi();
+    setPemasukanPopUp(false);
+    setNominal(0);
+    setKategori("");
+    setDeskripsi("");
+    setDate({});
+  };
+
+  const handleDeleteTransaksi = async (id) => {
+    const response = await axios.delete("/api/transaksi/" + id, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${cookies.auth.accessToken}`,
+      },
+    });
+
+    setList_transaksi(response.data.payload);
   };
 
   // nyoba dulu end
@@ -180,54 +235,14 @@ function Catatanku() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>09/10/2022</td>
-                <td>Makanan</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing</td>
-                <td>20.000</td>
-                <td class="aksi">
-                  <div className="imgContainer">
-                    <div className="item">
-                      <img src={editIcon} alt="" />
-                    </div>
-                    <div className="item">
-                      <img src={deleteIcon} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
+              {list_transaksi.length ? (
+                <Feed
+                  list_transaksi={list_transaksi}
+                  handleDeleteTransaksi={handleDeleteTransaksi}
+                />
+              ) : (
+                <p className="statusMsg">Belum ada transaksi</p>
+              )}
             </tbody>
           </table>
         </div>
@@ -251,7 +266,13 @@ function Catatanku() {
               <div className="formPemasukan">
                 <div className="leftSide">
                   <h4 className="subTitle">Kategori</h4>
-                  <select name="" id="" className="inputKategori">
+                  <select
+                    name=""
+                    id=""
+                    className="inputKategori"
+                    onChange={(e) => setKategori(e.target.value)}
+                    value={kategori}
+                  >
                     <option value="makanan">Makanan dan Minuman</option>
                     <option value="transportasi">Transportasi</option>
                     <option value="kesehatan">Kesehatan</option>
@@ -264,18 +285,16 @@ function Catatanku() {
                     type="date"
                     className="inputForm"
                     placeholder="Masukkan tanggal"
-                    // nyoba dulu
-
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-
-                    // nyoba dulu
                   />
                   <h4 className="subTitle">Jumlah</h4>
                   <input
                     type="number"
                     className="inputForm"
                     placeholder="Masukkan jumlah"
+                    value={nominal}
+                    onChange={(e) => setNominal(e.target.value)}
                   />
                 </div>
                 <div className="rightSide">
@@ -284,6 +303,8 @@ function Catatanku() {
                     type="text"
                     className="inputForm descForm"
                     placeholder="Masukkan deskripsi"
+                    value={deskripsi}
+                    onChange={(e) => setDeskripsi(e.target.value)}
                   />
                 </div>
               </div>

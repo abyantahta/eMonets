@@ -11,6 +11,7 @@ import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
 import { useState, useRef, useEffect } from "react";
 import axios from "../api/axios";
+import Loading from "./Loading";
 
 const REGISTER_URL = "/api/register";
 
@@ -119,6 +120,8 @@ function Register() {
           <h1>Success!</h1>
           <p>silahkan cek email anda</p>
         </section>
+      ) : isLoading ? (
+        <Loading />
       ) : (
         <div className="form">
           <div className="left">

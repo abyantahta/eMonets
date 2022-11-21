@@ -1,5 +1,7 @@
 package emonets.backend.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,13 +25,15 @@ public class TransaksiService {
             AppUser appUser = appUserService.findAppUserByEmail(email);
 
             //parsing react date to local date times
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate dateTime = LocalDate.parse(data.getTanggal(), formatter);
 
             //parsing transaksiData to transaksi
             transaksi.setAppUser(appUser);
             transaksi.setNominal(data.getNominal());
             transaksi.setKategori(data.getKategori());
             transaksi.setDeskripsi(data.getDeskripsi());
-            transaksi.setTanggal(data.getTanggal());
+            transaksi.setTanggal(dateTime);
             transaksi.setTipe(data.getTipe());
 
             transaksiRepo.save(transaksi);
@@ -39,8 +43,8 @@ public class TransaksiService {
         }
     }
 
-    public List<Transaksi> getAllTransaksi(){
-        return transaksiRepo.findAll();
+    public List<Transaksi> getAllTransaksi(String email){
+        return transaksiRepo.findAllByEmail(email);
     }
 
     public String deleteTransaksi(Long id){

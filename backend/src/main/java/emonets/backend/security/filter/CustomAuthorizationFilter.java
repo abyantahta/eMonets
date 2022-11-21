@@ -58,6 +58,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
                 } catch (Exception e) {
                     log.info("jalur2");
                     response.setHeader("error", e.getMessage());
+                    log.info(e.getMessage());
                     response.setStatus(org.springframework.http.HttpStatus.FORBIDDEN.value());
                     // mengenkapsulasi response menggunakan ResponseData
                     ResponseData<?> res = new ResponseData<>();

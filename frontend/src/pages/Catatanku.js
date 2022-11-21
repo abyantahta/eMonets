@@ -81,7 +81,8 @@ function Catatanku() {
 
   const handleSubmitPemasukan = (e) => {
     e.preventDefault();
-    const postUser = async () => {
+
+    const postTransaksi = async () => {
       try {
         const payload = JSON.stringify({
           nominal: nominal,
@@ -96,27 +97,15 @@ function Catatanku() {
             authorization: `Bearer ${cookies.auth.accessToken}`,
           },
         });
+        setList_transaksi(response.data.payload);
       } catch (error) {
         console.log(error.response);
       }
     };
-    const getTransaksi = async () => {
-      try {
-        const response = await axios.get("/api/transaksi", {
-          headers: { authorization: `Bearer ${cookies.auth.accessToken}` },
-          signal: controller.signal,
-        });
-        isMounted && setList_transaksi(response.data.payload);
-      } catch (error) {
-        console.log(error.response);
-        navigate("/login", { state: { from: location }, replace: true });
-      }
-    };
-    postUser();
-    getTransaksi();
+    postTransaksi();
     setPemasukanPopUp(false);
     setNominal(0);
-    setKategori("");
+    setKategori("makanan");
     setDeskripsi("");
     setDate({});
   };

@@ -37,8 +37,8 @@ public class TransaksiController {
     private final TransaksiService transaksiService;
 
     @PostMapping
-    public ResponseEntity<ResponseData<?>> addTransaksi(@Valid @RequestBody TransaksiData data, Errors errors, HttpServletRequest request){
-        ResponseData<?> responseData = new ResponseData<>();
+    public ResponseEntity<ResponseData<List<TransaksiData>>> addTransaksi(@Valid @RequestBody TransaksiData data, Errors errors, HttpServletRequest request){
+        ResponseData<List<TransaksiData>> responseData = new ResponseData<>();
         //cek error validasi
         if(errors.hasErrors()){
             //mendapatkan semua error
@@ -57,9 +57,22 @@ public class TransaksiController {
             try {
                 String email = JwtVerifier.verifier(request);
                 transaksiService.addTransaksi(data, email);
+                List<Transaksi> allTransaksi = transaksiService.getAllTransaksi(email);
+                List<TransaksiData> kembalianTransaksi = new ArrayList<>();
+        
+                for (Transaksi transaksi : allTransaksi) {
+                    TransaksiData transaksiData = new TransaksiData();
+                    transaksiData.setId(transaksi.getId());
+                    transaksiData.setNominal(transaksi.getNominal());
+                    transaksiData.setKategori(transaksi.getKategori());
+                    transaksiData.setDeskripsi(transaksi.getDeskripsi());
+                    transaksiData.setTanggal(transaksi.getTanggal().toString());
+                    transaksiData.setTipe(transaksi.getTipe());
+                    kembalianTransaksi.add(transaksiData);
+                }
                 responseData.setStatus(true);
                 responseData.getMessages().add("transaksi ditambahkan");
-                responseData.setPayload(null);
+                responseData.setPayload(kembalianTransaksi);
 
                 return ResponseEntity.ok().body(responseData);
             } catch (Exception e) {

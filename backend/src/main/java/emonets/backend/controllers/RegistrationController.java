@@ -30,7 +30,6 @@ import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import emonets.backend.dto.GPActionData;
 import emonets.backend.dto.GantiPasswordData;
 import emonets.backend.dto.JsonWebToken;
 import emonets.backend.dto.RegisterData;
@@ -55,7 +54,6 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseData<?>> register(@Valid @RequestBody RegisterData registerData, Errors errors){
-        log.info("debug register: lajur 1");
         ResponseData<?> responseData = new ResponseData<>();
 
         //cek error validasi

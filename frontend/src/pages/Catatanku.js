@@ -56,6 +56,29 @@ function Catatanku() {
 
   // integrasi end
 
+  // nyoba dulu start
+
+  const [date, setDate] = useState();
+
+  const handleSubmitPemasukan = (e) => {
+    e.preventDefault();
+    const getUser = async () => {
+      try {
+        const payload = JSON.stringify({
+          date: date,
+        });
+        const response = await axios.post("/api/cobadate", payload, {
+          headers: { "Content-Type": "application/json" },
+        });
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
+    getUser();
+  };
+
+  // nyoba dulu end
+
   const [pengeluaranPopUp, setPengeluaranPopUp] = useState(false);
   const [pemasukanPopUp, setPemasukanPopUp] = useState(false);
   const [month, setMonth] = useState(1);
@@ -241,6 +264,12 @@ function Catatanku() {
                     type="date"
                     className="inputForm"
                     placeholder="Masukkan tanggal"
+                    // nyoba dulu
+
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+
+                    // nyoba dulu
                   />
                   <h4 className="subTitle">Jumlah</h4>
                   <input
@@ -259,7 +288,10 @@ function Catatanku() {
                 </div>
               </div>
 
-              <button class="submit"> Simpan </button>
+              <button class="submit" onClick={handleSubmitPemasukan}>
+                {" "}
+                Simpan{" "}
+              </button>
             </form>
           </div>
         </div>

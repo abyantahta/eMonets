@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface AppUserRepo extends JpaRepository<AppUser, Long>{
 
     Optional<AppUser> findByEmail(String email);
+    void deleteByEmail(String email);
     
     @Transactional
     @Modifying

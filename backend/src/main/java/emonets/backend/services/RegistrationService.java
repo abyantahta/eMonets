@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import emonets.backend.dto.GPActionData;
 import emonets.backend.dto.GantiPasswordData;
 import emonets.backend.dto.RegisterData;
 import emonets.backend.dto.RegisterTokenData;
@@ -50,10 +49,18 @@ public class RegistrationService {
             String url = "http://localhost:8080/api/confirm?token="+token;
 
             //send email yang berisi link aktivasi
-            emailSender.send(
-                registerData.getEmail(),
-                buildEmail(user.getName(), url)
-            );
+            try {
+                emailSender.send(
+                    registerData.getEmail(),
+                    buildEmail(user.getName(), url)
+                );  
+            } catch (Exception e) {
+                appUserService.deleteAppUserByEmail(registerData.getEmail());
+                responseData.setStatus(false);
+                responseData.setPayload(null);
+                responseData.getMessages().add(e.getMessage());
+            }
+
 
             //lengkapi responseData
             responseData.setStatus(true);

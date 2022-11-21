@@ -104,4 +104,8 @@ public class AppUserService implements UserDetailsService{
     public AppUser findAppUserByEmail(String email){
         return appUserRepo.findByEmail(email).get();
     }
+
+    public void deleteAppUserByEmail(String email){
+        appUserRepo.deleteByEmail(email);
+    }
 }

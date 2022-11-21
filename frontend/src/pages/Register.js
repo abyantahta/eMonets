@@ -36,6 +36,9 @@ function Register() {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
+  //loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   //set focus use effect
   useEffect(() => {
     userRef.current.focus();
@@ -61,6 +64,7 @@ function Register() {
     }
 
     try {
+      setIsLoading(true);
       const payload = JSON.stringify({
         username: username,
         email: email,
@@ -70,6 +74,7 @@ function Register() {
         headers: { "Content-Type": "application/json" },
         // withCredentials: true,
       });
+      setIsLoading(false);
       setSuccess(true);
     } catch (error) {
       if (!error?.response) {
@@ -113,10 +118,6 @@ function Register() {
         <section>
           <h1>Success!</h1>
           <p>silahkan cek email anda</p>
-          <br />
-          <Link to="../login">
-            <span>Kembali ke Login</span>
-          </Link>
         </section>
       ) : (
         <div className="form">

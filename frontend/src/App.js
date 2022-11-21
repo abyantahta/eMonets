@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import CreateNewPassword from "./pages/CreateNewPassword";
 import Catatanku from "./pages/Catatanku";
 import Login from "./pages/Login";
+import Loading from "./pages/Loading";
 
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequiredAuth";
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public */}
         <Route path="/" element={<Landing />}></Route>
+        {/* <Route path="/loading" element={<Loading />}></Route> */}
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/forgotpassword" element={<ForgotPassword />}></Route>

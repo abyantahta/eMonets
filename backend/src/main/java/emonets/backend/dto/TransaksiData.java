@@ -1,5 +1,6 @@
 package emonets.backend.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
@@ -18,6 +19,6 @@ public class TransaksiData {
     @NotEmpty(message = "deskripsi harus diisi")
     private String deskripsi;
     @NotEmpty(message = "tanggal harus diisi")
-    private LocalDateTime tanggal;
+    private LocalDate tanggal;
     private int tipe;
 }

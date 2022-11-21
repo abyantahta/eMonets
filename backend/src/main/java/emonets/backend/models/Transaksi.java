@@ -1,6 +1,6 @@
 package emonets.backend.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class Transaksi {
     @Column(nullable = false)
     private String deskripsi;
     @Column(nullable = false)
-    private LocalDateTime tanggal;
+    private LocalDate tanggal;
     @Column(nullable = false)
     private int tipe;
 

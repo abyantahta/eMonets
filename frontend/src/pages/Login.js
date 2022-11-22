@@ -9,6 +9,7 @@ import { VscMail } from "react-icons/vsc";
 import { BsKey } from "react-icons/bs";
 import { BsEye } from "react-icons/bs";
 import { BsEyeSlash } from "react-icons/bs";
+import { RiCloseCircleLine } from "react-icons/ri";
 import { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { useCookies } from "react-cookie";
@@ -62,7 +63,7 @@ function Login() {
       navigate(from, { replace: true });
     } catch (error) {
       if (!error.response) {
-        setErrMsg("server tidak merespon");
+        setErrMsg("Server tidak merespon");
       } else {
         setErrMsg(error.response.data.messages);
       }
@@ -94,14 +95,17 @@ function Login() {
       </div>
       <div className="right">
         <div className="contentContainer">
-          {/* error messages sementara */}
-          <p ref={errRef} aria-live="assertive">
-            {" "}
-            {errMsg}{" "}
-          </p>
-          {/* error messages sementara */}
           <form action="">
             <h1 className="formTitle">Login</h1>
+          {/* error messages sementara */}
+          {errMsg &&  
+          <div ref={errRef} aria-live="assertive" className="errorMsg">
+            <i><RiCloseCircleLine/></i>
+            <p>{errMsg}</p>
+          </div>
+          }
+
+          {/* error messages sementara */}
             <div className="input">
               <i>
                 <VscMail />
@@ -111,7 +115,7 @@ function Login() {
                 ref={userRef}
                 name="email"
                 placeholder="email"
-                required=""
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -124,7 +128,9 @@ function Login() {
                 type={passwordType}
                 onChange={(e) => setPassword(e.target.value)}
                 name="password"
-                required=""
+                required
+                minLength='6'
+                maxLength='12'
                 placeholder="password"
                 value={password}
               />
